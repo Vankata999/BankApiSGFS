@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class RequestParam {
+public class ERequest {
 
 	private final String merchantId;
 	private final String subscrNumber;
