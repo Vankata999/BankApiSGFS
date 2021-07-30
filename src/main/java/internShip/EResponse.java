@@ -2,36 +2,40 @@ package internShip;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Random;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
+@XmlRootElement(name = "e_response")
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EResponse implements Serializable {
 
-	@JsonFormat()
-	@NonNull
-
 	private static final long serialVersionUID = 1L;
+	
+	@JsonFormat()
+	@NonNull 
+	private  ResponseStatus status;
 
-	private final ResponseStatus status;
-
+	
 	private final Integer amount;
 	private final Integer fee;
 	private final Integer total;
@@ -39,10 +43,13 @@ public class EResponse implements Serializable {
 	@JsonFormat(pattern = "yyyyMMdd")
 	@XmlElement(name = "valid_to")
 	private final LocalDate validto;
+	
 	@XmlElement(name = "short_desc")
 	private final String shortDesc;
+	
 	@XmlElement(name = "long_desc")
 	private final String longDesc;
+	
 	@XmlElement(name = "second_Id")
 	private final String secondId;
 
@@ -53,13 +60,6 @@ public class EResponse implements Serializable {
 	@XmlElement(name = "error_des")
 	@Setter
 	private  String errorDes ;
-
-
-
-
-
-
-
 
 	@JsonFormat(shape= JsonFormat.Shape.OBJECT)
 	public enum ResponseStatus {
@@ -72,17 +72,14 @@ public class EResponse implements Serializable {
 
 		private ResponseStatus(String code) {
 
-			this.setCode(code);
+			this.code = code;
 		}
 		@JsonValue
 		public String getCode() {
 			return code;
 		}
 
-		public void setCode(String code) {
-			this.code = code;
-		}
-
+		
 		
 	}
 }

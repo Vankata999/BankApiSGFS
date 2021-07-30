@@ -1,7 +1,14 @@
 package internShip.errormessages;
-import internShip.EResponse.ResponseStatus;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import internShip.EResponse.ResponseStatus;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ErrorMessage extends RuntimeException {	
+
+	
 	private static final long serialVersionUID = -4875151364873005180L;
 	private final ResponseStatus status;
 	

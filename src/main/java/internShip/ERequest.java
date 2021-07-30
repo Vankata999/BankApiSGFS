@@ -1,8 +1,10 @@
 package internShip;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-
+@XmlRootElement
 @Data
 @RequiredArgsConstructor
 public class ERequest {

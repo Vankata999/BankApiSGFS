@@ -1,7 +1,8 @@
 package internShip.controller;
 
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,24 +11,39 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import internShip.EResponse;
 import internShip.EResponse.ResponseStatus;
 import internShip.errormessages.ErrorMessage;
-import jdk.internal.org.jline.utils.Log;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @ControllerAdvice
 
 public class ExeptionHandlerController {
 	
-	@ExceptionHandler(ErrorMessage.class)
-	public ResponseEntity<String> exception(ErrorMessage excp)
+	@ExceptionHandler(value = {ErrorMessage.class})
+	public ResponseEntity exception(ErrorMessage excp)
     {
-        EResponse resp = new EResponse(null,null,null,null,null,null,null,null);
+		log.error("Exceptions->"+ excp.getStatus());
+        EResponse resp = new EResponse( null,null,null,null,null,null,null,null);
     
-        ResponseStatus st = excp.getStatus();
+        if(HttpStatus.valueOf(null)!=HttpStatus.OK)
+        {
+        	ResponseStatus st = excp.getStatus();
+        	String code = excp.getStatus().G_ERROR.getCode();
+        	resp.setErrorCode(code);
+        	resp.setErrorDes(st.toString());
+
+            return new ResponseEntity(resp ,HttpStatus.OK) ;
+
+        }
+        else {
+        ResponseStatus st = excp.getStatus() ;
         String code = excp.getStatus().getCode();
-        
 		resp.setErrorCode(code);
 		resp.setErrorDes(st.toString());
        
         
-        return new ResponseEntity(resp ,HttpStatus.NOT_FOUND) ;
+        return new ResponseEntity(resp ,HttpStatus.INTERNAL_SERVER_ERROR) ;
+        }
     }
+	
+
+	
 }

@@ -3,17 +3,13 @@ package internShip.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.stream.Collectors;
-import java.util.List;
 
 
-import org.springframework.boot.jackson.JsonObjectDeserializer;
+
 import org.springframework.stereotype.Service;
 
 import internShip.Merchant;
 import internShip.MerchantList;
-import internShip.EResponse;
 
 
 @Service
@@ -45,11 +41,12 @@ public class EasyPayService {
 		merch.add(merchant2);
 	}
 
-	public MerchantList getMerchant() {
+	public MerchantList getMerchant(String lang) {
 		MerchantList d = new MerchantList(merch.size(), merch);
 		return d;
 	}
 
+	
 	
 	// checkBill
 	

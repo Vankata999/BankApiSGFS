@@ -3,12 +3,15 @@ package internShip.controller;
 
 
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import internShip.MerchantList;
@@ -27,11 +30,11 @@ public class EasyPayController {
 	private EasyPayService service;
 	//@Autowired
 	
-	@GetMapping(value = "/merchant")
-	public MerchantList merch()
+	@GetMapping(value = "/merchant",produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public MerchantList merch(@RequestParam(defaultValue = "bg") String lang)
 	{
 
-		return service.getMerchant();
+		return service.getMerchant("lang");
 	}
 	
 
@@ -62,9 +65,13 @@ public class EasyPayController {
 		return postRequest.payBill(request);								
 	}
 
+	
 	@PostMapping(value = "/reverseBill",consumes = "application/json", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
 	public EResponse reverseBill(@RequestBody ERequest request)
 	{				
 		return postRequest.reverseBill(request);								
 	}
+	
+	
+	
 }
